@@ -6,10 +6,22 @@ interface IRequest {
 }
 
 class ListAllUsersUseCase {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(private usersRepository: IUsersRepository) { }
 
   execute({ user_id }: IRequest): User[] {
-    // Complete aqui
+
+
+    const existsById = this.usersRepository.findById(user_id);
+
+    if (!existsById.admin) {
+
+      throw new Error("Mensagem de erro")
+    }
+
+    const users = this.usersRepository.list()
+    return users;
+
+
   }
 }
 
