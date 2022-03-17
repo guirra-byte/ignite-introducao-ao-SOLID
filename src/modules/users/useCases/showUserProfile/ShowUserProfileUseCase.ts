@@ -6,10 +6,19 @@ interface IRequest {
 }
 
 class ShowUserProfileUseCase {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(private usersRepository: IUsersRepository) { }
 
   execute({ user_id }: IRequest): User {
-    // Complete aqui
+
+    const verifyById = this.usersRepository.findById(user_id);
+
+    if (!verifyById) {
+
+      throw new Error("Mensagem de erro")
+    }
+
+    return verifyById;
+
   }
 }
 
