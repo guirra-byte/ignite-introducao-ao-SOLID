@@ -1,0 +1,186 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Challenge",
+    "description": "Essa API tem como objetivo a prática de SOLID com Node.js e TypeScript",
+    "version": "1.0.0",
+    "contact": {
+      "email": "guirramatheus1@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Create User"
+        ],
+        "summary": "Cria um novo Usuário",
+        "description": "Essa rota será responsável pela criação de um novo usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Matheus Guirra",
+                  "email": "guirramatheus1@gmail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operação realizada com sucesso"
+          },
+          "400": {
+            "description": "Email já está sendo utilizado."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Retorna todos os usuários",
+        "descritpion": "Return all users",
+        "responses": {
+          "200": {
+            "descritpion": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "created_at": {
+                        "type": "new Date"
+                      },
+                      "updated_at": {
+                        "type": "new Date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Usuário sem permissão ou usuário não encontrado"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Busca de um usuário pelo id",
+        "description": "Busca e retorna um usuário pelo id",
+        "parameters": [
+          {
+            "id": "user_id",
+            "in": "params",
+            "description": "Id do usuário",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": [
+          "Turn user admin"
+        ],
+        "summary": "Tornar um usuário em admin",
+        "description": "Trona um usuário comum, em um usuário administrador",
+        "parameters": [
+          {
+            "name": "Id do usuário",
+            "in": "path",
+            "description": "Digite o Id do usuário",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não econtrado"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "admin": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
